@@ -7,13 +7,22 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol OnboardingViewProtocol: AnyObject {
+ 
+}
 
+final class OnboardingViewController: UIViewController {
+
+    var presenter: OnboardingPresenterProtocol!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let backgroundImageView = UIImageView(image: Images.background.image)
+        backgroundImageView.frame = view.bounds
+        view.addSubview(backgroundImageView)
     }
-
 
 }
 
+extension OnboardingViewController: OnboardingViewProtocol {
+    
+}

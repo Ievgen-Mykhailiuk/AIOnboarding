@@ -32,7 +32,12 @@ internal enum FontFamily {
     internal static let opticalSize17Weight30925 = FontConvertible(name: "SFPro-Ultralight", family: "SF Pro", path: "SF-Pro.ttf")
     internal static let all: [FontConvertible] = [opticalSize17Weight1000, opticalSize17Weight700, opticalSize17Weight860, opticalSize17Weight274315, opticalSize17Weight510, opticalSize17Weight400, opticalSize17Weight590, opticalSize17Weight110725, opticalSize17Weight30925]
   }
-  internal static let allCustomFonts: [FontConvertible] = [SFPro.all].flatMap { $0 }
+  internal enum SFProDisplay {
+    internal static let bold = FontConvertible(name: "SFProDisplay-Bold", family: "SF Pro Display", path: "SF-Pro-Display-Bold.OTF")
+    internal static let medium = FontConvertible(name: "SFProDisplay-Medium", family: "SF Pro Display", path: "SF-Pro-Display-Medium.OTF")
+    internal static let all: [FontConvertible] = [bold, medium]
+  }
+  internal static let allCustomFonts: [FontConvertible] = [SFPro.all, SFProDisplay.all].flatMap { $0 }
   internal static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }
