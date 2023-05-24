@@ -8,7 +8,9 @@
 import UIKit
 
 protocol OnboardingViewProtocol: AnyObject {
- 
+    func setupUI()
+    func showAlert()
+    func nextPage(at index: Int)
 }
 
 final class OnboardingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
@@ -16,12 +18,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     // MARK: - Properties
     
     var presenter: OnboardingPresenterProtocol!
-    var pages: [Int] = [1, 2, 3, 4]
-    var currentPageIndex: Int = .zero {
-        didSet {
-            refresh()
-        }
-    }
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CardsCollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
@@ -33,8 +30,6 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }()
     private lazy var pageControl: PageControl = {
         let pageControl = PageControl()
-        pageControl.numberOfPages = pages.count
-        pageControl.currentPage = currentPageIndex
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -63,19 +58,14 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialSetup()
+        presenter.viewDidLoad()
     }
     
     // MARK: - Button Action
 
     @objc private func actionButtonTapped(_ sender: UIButton) {
         sender.animateSelection()
-        let nextPageIndex = currentPageIndex + 1
-        if nextPageIndex < pages.count {
-            scrollToPage(at: nextPageIndex)
-        } else {
-            // Handle action when reaching the last page
-        }
+        presenter.onActionButtonTapped()
         HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
 
@@ -106,7 +96,8 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     private func setupPageControl() {
-       
+        pageControl.numberOfPages = presenter.getPagesCount()
+        pageControl.currentPage = presenter.getCurrentPageIndex()
         view.addSubview(pageControl)
 
         NSLayoutConstraint.activate([
@@ -180,27 +171,22 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         ])
     }
     
-    private func scrollToPage(at index: Int) {
+    private func scrollToPage(to index: Int) {
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         pageControl.currentPage = index
-        currentPageIndex = index
     }
 
     private func refresh() {
-        if currentPageIndex < pages.count - 1 {
-            actionButton.setTitle("Continue", for: .normal)
-        } else {
-            actionButton.setTitle("Trial&Pay", for: .normal)
-        }
-        pageControl.isHidden = currentPageIndex == 0 || currentPageIndex == 3
-        policyView.isHidden = currentPageIndex == 1 || currentPageIndex == 2
+        actionButton.setTitle(presenter.isLastPage() ? "Trial&Pay" : "Continue", for: .normal)
+        pageControl.isHidden = presenter.isFirstPage() || presenter.isLastPage()
+        policyView.isHidden = !(presenter.isFirstPage() || presenter.isLastPage())
     }
     
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pages.count
+        return presenter.getPagesCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -219,7 +205,21 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
 
 // MARK: - OnboardingViewProtocol
 
-extension OnboardingViewController: OnboardingViewProtocol {}
+extension OnboardingViewController: OnboardingViewProtocol {
+    func setupUI() {
+        initialSetup()
+    }
+    
+    func showAlert() {
+         
+    }
+    
+    func nextPage(at index: Int) {
+        scrollToPage(to: index)
+        refresh()
+    }
+    
+}
 
 // MARK: - UITextViewDelegate
 
