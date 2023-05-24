@@ -17,7 +17,11 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     
     var presenter: OnboardingPresenterProtocol!
     var pages: [Int] = [1, 2, 3, 4]
-    var currentPageIndex = 0
+    var currentPageIndex: Int = .zero {
+        didSet {
+            refresh()
+        }
+    }
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CardsCollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
@@ -27,17 +31,17 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    private lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.pageIndicatorTintColor = .white
-        pageControl.currentPageIndicatorTintColor = .green
+    private lazy var pageControl: PageControl = {
+        let pageControl = PageControl()
+        pageControl.numberOfPages = pages.count
+        pageControl.currentPage = currentPageIndex
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
     private lazy var actionButton: UIButton = {
         let actionButton = UIButton()
         actionButton.backgroundColor = .white
-        actionButton.layer.cornerRadius = 28
+        actionButton.layer.cornerRadius = Constants.actionButtonCornerRadius
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         actionButton.setTitleColor(.black, for: .normal)
@@ -46,6 +50,13 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     private lazy var backgroundImageView: UIImageView = {
        let imageview = UIImageView(image: Images.background.image)
         return imageview
+    }()
+    private lazy var policyView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
    // MARK: - Lyficycle
@@ -58,25 +69,27 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     // MARK: - Button Action
 
     @objc private func actionButtonTapped(_ sender: UIButton) {
+        sender.animateSelection()
         let nextPageIndex = currentPageIndex + 1
-
-        if nextPageIndex < 4 {
+        if nextPageIndex < pages.count {
             scrollToPage(at: nextPageIndex)
         } else {
             // Handle action when reaching the last page
-            // For example, dismiss the onboarding view
-            dismiss(animated: true, completion: nil)
         }
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
 
     // MARK: - Private methods
     
     private func initialSetup() {
+        navigationController?.isNavigationBarHidden = true
         view.addSubview(backgroundImageView)
         backgroundImageView.frame = view.bounds
         setupCollectionView()
         setupPageControl()
         setupButton()
+        setupPolicyView()
+        refresh()
     }
     
     private func setupCollectionView() {
@@ -85,22 +98,20 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            collectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.72),
+            collectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * Constants.collectionHeightCoefficient),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * 0.189)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.collectionBottomPaddingCoefficient)
         ])
     }
     
     private func setupPageControl() {
-        pageControl.numberOfPages = pages.count
-        pageControl.currentPage = currentPageIndex
+       
         view.addSubview(pageControl)
 
         NSLayoutConstraint.activate([
-            pageControl.leftAnchor.constraint(equalTo: view.leftAnchor),
-            pageControl.rightAnchor.constraint(equalTo: view.rightAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * 0.055)
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.pageControlBottomPaddingCoefficient)
         ])
     }
     
@@ -108,13 +119,65 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         view.addSubview(actionButton)
         
         NSLayoutConstraint.activate([
-            actionButton.heightAnchor.constraint(equalToConstant: 56),
-            actionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 31),
-            actionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -31),
-            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * 0.095)
+            actionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonHeight),
+            actionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.actionButtonInset),
+            actionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.actionButtonInset),
+            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.actionButtonBottomPaddingCoefficient)
         ])
-
-        updateButtonState()
+    }
+    
+    private func setupPolicyView() {
+        // Create the label
+        let font = FontFamily.SFPro.opticalSize17Weight400.font(size: 12)
+        let label = UILabel()
+        label.font = font
+        label.textColor = UIColor.gray
+        label.text = "By continuing you accept our:"
+        
+        // Create the attributed string for the links
+        
+        let termsOfUseLink = NSAttributedString(string: "Terms of Use", attributes: [.link: Constants.termsOfUseURL, .font: font])
+        
+        let privacyPolicyLink = NSAttributedString(string: "Privacy Policy", attributes: [.link: Constants.privacyPolicyURL, .font: font])
+        
+        let subscriptionTermsLink = NSAttributedString(string: "Subscription Terms", attributes: [.link: Constants.subscriptiontermsURL, .font: font])
+        
+        let commaSepatator = NSAttributedString(string: ", ", attributes: [.font: font, .foregroundColor: UIColor.gray])
+        
+        let andSepatator = NSAttributedString(string: ", and ", attributes: [.font: font, .foregroundColor: UIColor.gray])
+     
+        // Create the text view
+        let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.dataDetectorTypes = .link
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = .zero
+        
+        
+        // Combine the attributed strings and set it to the text view
+        let fullText = NSMutableAttributedString()
+        fullText.append(termsOfUseLink)
+        fullText.append(commaSepatator)
+        fullText.append(privacyPolicyLink)
+        fullText.append(andSepatator)
+        fullText.append(subscriptionTermsLink)
+        textView.attributedText = fullText
+        
+        // Handle link tapping
+        textView.delegate = self
+        
+        [label, textView].forEach {
+            policyView.addArrangedSubview($0)
+        }
+        view.addSubview(policyView)
+ 
+        NSLayoutConstraint.activate([
+            policyView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            policyView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            policyView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.privacyViewBottomPadding)
+        ])
     }
     
     private func scrollToPage(at index: Int) {
@@ -122,15 +185,16 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         pageControl.currentPage = index
         currentPageIndex = index
-        updateButtonState()
     }
 
-    private func updateButtonState() {
+    private func refresh() {
         if currentPageIndex < pages.count - 1 {
             actionButton.setTitle("Continue", for: .normal)
         } else {
             actionButton.setTitle("Trial&Pay", for: .normal)
         }
+        pageControl.isHidden = currentPageIndex == 0 || currentPageIndex == 3
+        policyView.isHidden = currentPageIndex == 1 || currentPageIndex == 2
     }
     
     // MARK: - UICollectionViewDataSource
@@ -151,9 +215,33 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         return collectionView.bounds.size
     }
     
-
 }
 
 // MARK: - OnboardingViewProtocol
 
 extension OnboardingViewController: OnboardingViewProtocol {}
+
+// MARK: - UITextViewDelegate
+
+extension OnboardingViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        UIApplication.shared.open(URL)
+        return false
+    }
+}
+
+private extension OnboardingViewController {
+    enum Constants {
+        static let termsOfUseURL: String = "https://assistai.guru/documents/tos.html"
+        static let privacyPolicyURL: String = "https://assistai.guru/documents/privacy.html"
+        static let subscriptiontermsURL: String = "https://assistai.guru/documents/subscription.html"
+        static let actionButtonHeight: CGFloat = 56
+        static let actionButtonCornerRadius: CGFloat = 28
+        static let actionButtonInset: CGFloat = 31
+        static let collectionHeightCoefficient: CGFloat = 0.72
+        static let collectionBottomPaddingCoefficient: CGFloat = 0.189
+        static let pageControlBottomPaddingCoefficient: CGFloat = 0.055
+        static let actionButtonBottomPaddingCoefficient: CGFloat = 0.095
+        static let privacyViewBottomPadding: CGFloat = 34
+    }
+}

@@ -25,6 +25,9 @@
 		FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */; };
 		FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */; };
 		FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */; };
+		FCCF7BD92A1E9A650091D5B2 /* HapticFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */; };
+		FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */; };
+		FCCF7BDD2A1EB2B00091D5B2 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */; };
 		FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */; };
 		FCDDAF242A1CD13B008C70EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF232A1CD13B008C70EF /* SceneDelegate.swift */; };
 		FCDDAF262A1CD13B008C70EF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF252A1CD13B008C70EF /* OnboardingViewController.swift */; };
@@ -51,6 +54,9 @@
 		FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCell.swift; sourceTree = "<group>"; };
 		FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackGenerator.swift; sourceTree = "<group>"; };
+		FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
+		FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		FCDDAF1E2A1CD13B008C70EF /* AIOnboarding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIOnboarding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCDDAF232A1CD13B008C70EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +101,7 @@
 			children = (
 				FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */,
 				FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */,
+				FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -104,6 +111,7 @@
 			children = (
 				FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */,
 				FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */,
+				FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -133,6 +141,7 @@
 				FCDDAF252A1CD13B008C70EF /* OnboardingViewController.swift */,
 				FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */,
 				FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */,
+				FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +300,7 @@
 			files = (
 				FC304E5D2A1D367600E2C135 /* Fonts.swift in Sources */,
 				FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */,
+				FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */,
 				FC304E5F2A1D367600E2C135 /* Colors.swift in Sources */,
 				FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */,
 				FC304E692A1D544A00E2C135 /* Strings.swift in Sources */,
@@ -299,6 +309,8 @@
 				FCDDAF262A1CD13B008C70EF /* OnboardingViewController.swift in Sources */,
 				FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */,
 				FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */,
+				FCCF7BD92A1E9A650091D5B2 /* HapticFeedbackGenerator.swift in Sources */,
+				FCCF7BDD2A1EB2B00091D5B2 /* UIView+Extension.swift in Sources */,
 				FC304E4E2A1D2E7400E2C135 /* OnboardingPresenter.swift in Sources */,
 				FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */,
 				FC304E6B2A1D5B4F00E2C135 /* BaseRouter.swift in Sources */,

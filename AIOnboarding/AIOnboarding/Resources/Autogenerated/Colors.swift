@@ -22,9 +22,11 @@ internal typealias AssetColorTypeAlias = ColorAsset.Color
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Colors {
+  internal static let activePageIndicator = ColorAsset(name: "activePageIndicator")
   internal static let cardBackground = ColorAsset(name: "cardBackground")
   internal static let chatBlue = ColorAsset(name: "chatBlue")
   internal static let chatPurple = ColorAsset(name: "chatPurple")
+  internal static let inactivePageIndicator = ColorAsset(name: "inactivePageIndicator")
   internal static let introductionBackground = ColorAsset(name: "introductionBackground")
   internal static let introductionMain = ColorAsset(name: "introductionMain")
   internal static let suggestionBlue = ColorAsset(name: "suggestionBlue")
