@@ -13,8 +13,12 @@ protocol OnboardingPresenterProtocol {
 
 final class OnboardingPresenter {
     
+    // MARK: - Properties
+    
     private weak var view: OnboardingViewProtocol!
     private let router: OnboardingRouterProtocol
+    
+    // MARK: - Lifecycle
     
     init(view: OnboardingViewProtocol,
          router: OnboardingRouterProtocol) {
@@ -22,6 +26,8 @@ final class OnboardingPresenter {
         self.router = router
     }
 }
+
+// MARK: - OnboardingPresenterProtocol
 
 extension OnboardingPresenter: OnboardingPresenterProtocol {
     func viewDidLoad() {

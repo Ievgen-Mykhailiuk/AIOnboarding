@@ -22,6 +22,9 @@
 		FC304E6B2A1D5B4F00E2C135 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */; };
 		FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */; };
 		FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */; };
+		FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */; };
+		FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */; };
+		FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */; };
 		FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */; };
 		FCDDAF242A1CD13B008C70EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF232A1CD13B008C70EF /* SceneDelegate.swift */; };
 		FCDDAF262A1CD13B008C70EF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF252A1CD13B008C70EF /* OnboardingViewController.swift */; };
@@ -45,6 +48,9 @@
 		FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
 		FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCell.swift; sourceTree = "<group>"; };
+		FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		FCDDAF1E2A1CD13B008C70EF /* AIOnboarding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIOnboarding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCDDAF232A1CD13B008C70EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */,
+				FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -124,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				FCDDAF252A1CD13B008C70EF /* OnboardingViewController.swift */,
+				FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */,
+				FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,10 +294,13 @@
 				FC304E5F2A1D367600E2C135 /* Colors.swift in Sources */,
 				FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */,
 				FC304E692A1D544A00E2C135 /* Strings.swift in Sources */,
+				FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */,
 				FC304E4A2A1D2E4400E2C135 /* OnboardingModuleBuilder.swift in Sources */,
 				FCDDAF262A1CD13B008C70EF /* OnboardingViewController.swift in Sources */,
+				FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */,
 				FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */,
 				FC304E4E2A1D2E7400E2C135 /* OnboardingPresenter.swift in Sources */,
+				FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */,
 				FC304E6B2A1D5B4F00E2C135 /* BaseRouter.swift in Sources */,
 				FC304E5E2A1D367600E2C135 /* Images.swift in Sources */,
 				FCDDAF242A1CD13B008C70EF /* SceneDelegate.swift in Sources */,
