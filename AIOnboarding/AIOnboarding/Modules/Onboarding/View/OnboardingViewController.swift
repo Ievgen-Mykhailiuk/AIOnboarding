@@ -9,16 +9,21 @@ import UIKit
 
 protocol OnboardingViewProtocol: AnyObject {
     func setupUI()
-    func showAlert()
+    func showAlert(title: String, message: String, actions: [UIAlertAction]?)
     func nextPage(at index: Int)
+    func loading(isLoading: Bool)
 }
 
 final class OnboardingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
-
+    
     // MARK: - Properties
     
     var presenter: OnboardingPresenterProtocol!
-
+    private lazy var loadingView: LoadingView = {
+        let loadingView = LoadingView()
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        return loadingView
+    }()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CardsCollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
@@ -43,7 +48,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         return actionButton
     }()
     private lazy var backgroundImageView: UIImageView = {
-       let imageview = UIImageView(image: Images.background.image)
+        let imageview = UIImageView(image: Images.background.image)
         return imageview
     }()
     private lazy var policyView: UIStackView = {
@@ -73,7 +78,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         return closeButton
     }()
     
-   // MARK: - Lyficycle
+    // MARK: - Lyficycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +86,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     // MARK: - Button Actions
-
+    
     @objc private func actionButtonTapped(_ sender: UIButton) {
         sender.animateSelection()
         presenter.onActionButtonTapped()
@@ -93,7 +98,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     @objc private func closeButtonTapped(_ sender: UIButton) {
- 
+        
     }
     
     // MARK: - Private methods
@@ -128,7 +133,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         pageControl.numberOfPages = presenter.getPagesCount()
         pageControl.currentPage = presenter.getCurrentPageIndex()
         view.addSubview(pageControl)
-
+        
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.pageControlBottomPadding)
@@ -137,6 +142,13 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     
     private func setupMainActionButton() {
         view.addSubview(mainActionButton)
+        mainActionButton.addSubview(loadingView)
+        
+        NSLayoutConstraint.activate([
+            loadingView.widthAnchor.constraint(equalToConstant: 80),
+            loadingView.centerYAnchor.constraint(equalTo: mainActionButton.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: mainActionButton.centerXAnchor)
+        ])
         
         NSLayoutConstraint.activate([
             mainActionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonHeight),
@@ -185,8 +197,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         
         let commaSepatator = NSAttributedString(string: ", ", attributes: [.font: font, .foregroundColor: UIColor.gray])
         
-        let andSepatator = NSAttributedString(string: ", and ", attributes: [.font: font, .foregroundColor: UIColor.gray])
-     
+        let andSepatator = NSAttributedString(string: ", and ", attributes: [.font: font, .foregroundColor: UIColor.gray])        
         // Create the text view
         let textView = UITextView()
         textView.backgroundColor = .clear
@@ -213,7 +224,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
             policyView.addArrangedSubview($0)
         }
         view.addSubview(policyView)
- 
+        
         NSLayoutConstraint.activate([
             policyView.leftAnchor.constraint(equalTo: view.leftAnchor),
             policyView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -226,7 +237,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         pageControl.currentPage = index
     }
-
+    
     private func refresh() {
         mainActionButton.setTitle(presenter.isLastPage() ? "Try Free & Subscribe" : "Continue", for: .normal)
         pageControl.isHidden = presenter.isFirstPage() || presenter.isLastPage()
@@ -258,12 +269,18 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
 // MARK: - OnboardingViewProtocol
 
 extension OnboardingViewController: OnboardingViewProtocol {
+    
+    func loading(isLoading: Bool) {
+        mainActionButton.setTitleColor( isLoading ? .clear : .black, for: .normal)
+        isLoading ? loadingView.start() : loadingView.stop()
+    }
+    
     func setupUI() {
         initialSetup()
     }
     
-    func showAlert() {
-         
+    func showAlert(title: String, message: String, actions: [UIAlertAction]?) {
+        presentAlert(title: title, message: message, actions: actions)
     }
     
     func nextPage(at index: Int) {

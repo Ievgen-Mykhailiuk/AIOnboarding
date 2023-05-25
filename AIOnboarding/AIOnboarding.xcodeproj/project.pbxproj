@@ -34,6 +34,7 @@
 		FCE4A95D2A1F9D1600EBF4FC /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCE4A95B2A1F9D1600EBF4FC /* SFProText-Medium.ttf */; };
 		FCE4A95E2A1F9D1600EBF4FC /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCE4A95C2A1F9D1600EBF4FC /* SFProText-Regular.ttf */; };
 		FCE4A9602A1FAB1300EBF4FC /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A95F2A1FAB1300EBF4FC /* OnboardingPage.swift */; };
+		FCE4A9622A1FFD5C00EBF4FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		FCE4A95B2A1F9D1600EBF4FC /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
 		FCE4A95C2A1F9D1600EBF4FC /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		FCE4A95F2A1FAB1300EBF4FC /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
+		FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */,
 				FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */,
 				FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */,
+				FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */,
 				FC304E5F2A1D367600E2C135 /* Colors.swift in Sources */,
 				FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */,
+				FCE4A9622A1FFD5C00EBF4FC /* LoadingView.swift in Sources */,
 				FC304E692A1D544A00E2C135 /* Strings.swift in Sources */,
 				FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */,
 				FC304E4A2A1D2E4400E2C135 /* OnboardingModuleBuilder.swift in Sources */,

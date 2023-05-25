@@ -53,7 +53,11 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
             currentPageIndex += 1
             view.nextPage(at: nextPageIndex)
         } else {
-            // Handle action when reaching the last page
+            view.loading(isLoading: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                self.view.showAlert(title: "Purchase", message: "Trial 7 days", actions: nil)
+                self.view.loading(isLoading: false)
+            })
         }
     }
     
