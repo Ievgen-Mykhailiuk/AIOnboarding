@@ -9,6 +9,7 @@ import Foundation
 
 protocol OnboardingRouterProtocol {
     func showOboarding()
+    func close()
 }
 
 final class OnboardingRouter: BaseRouter, OnboardingRouterProtocol {
@@ -20,5 +21,7 @@ final class OnboardingRouter: BaseRouter, OnboardingRouterProtocol {
              animated: true,
              completion: nil)
     }
-  
+    
+    func close() {}
+    
 }

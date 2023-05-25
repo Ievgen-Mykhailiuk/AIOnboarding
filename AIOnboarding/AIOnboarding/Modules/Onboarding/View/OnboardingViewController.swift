@@ -33,7 +33,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
-    private lazy var actionButton: UIButton = {
+    private lazy var mainActionButton: UIButton = {
         let actionButton = UIButton()
         actionButton.backgroundColor = .white
         actionButton.layer.cornerRadius = Constants.actionButtonCornerRadius
@@ -53,6 +53,25 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    private lazy var restorePurchaseButton: UIButton = {
+        let restorePurchaseButton = UIButton()
+        restorePurchaseButton.titleLabel?.font = FontFamily.SFProText.medium.font(size: 14)
+        restorePurchaseButton.setTitleColor(Colors.inactivePageIndicator.color, for: .normal)
+        restorePurchaseButton.backgroundColor = .clear
+        restorePurchaseButton.translatesAutoresizingMaskIntoConstraints = false
+        restorePurchaseButton.addTarget(self, action: #selector(restorePurchaseButtonTapped), for: .touchUpInside)
+        restorePurchaseButton.setTitle(Constants.restorePurchaseButtonTitle, for: .normal)
+        return restorePurchaseButton
+    }()
+    private lazy var closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.backgroundColor = .clear
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        closeButton.setTitleColor(.black, for: .normal)
+        closeButton.setImage(Images.closeButton.image, for: .normal)
+        return closeButton
+    }()
     
    // MARK: - Lyficycle
     
@@ -61,14 +80,22 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         presenter.viewDidLoad()
     }
     
-    // MARK: - Button Action
+    // MARK: - Button Actions
 
     @objc private func actionButtonTapped(_ sender: UIButton) {
         sender.animateSelection()
         presenter.onActionButtonTapped()
         HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
-
+    
+    @objc private func restorePurchaseButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+    @objc private func closeButtonTapped(_ sender: UIButton) {
+ 
+    }
+    
     // MARK: - Private methods
     
     private func initialSetup() {
@@ -77,8 +104,10 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         backgroundImageView.frame = view.bounds
         setupCollectionView()
         setupPageControl()
-        setupButton()
+        setupPageButton()
         setupPolicyView()
+        setupRestorePurchaseButton()
+        setupCloseButton()
         refresh()
     }
     
@@ -88,10 +117,10 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            collectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * Constants.collectionHeightCoefficient),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.collectionBottomPaddingCoefficient)
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.collectionViewTopPadding),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.collectionViewBottomPadding)
         ])
     }
     
@@ -102,18 +131,39 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
 
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.pageControlBottomPaddingCoefficient)
+            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.pageControlBottomPadding)
         ])
     }
     
-    private func setupButton() {
-        view.addSubview(actionButton)
+    private func setupmainActionButton() {
+        view.addSubview(mainActionButton)
         
         NSLayoutConstraint.activate([
-            actionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonHeight),
-            actionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.actionButtonInset),
-            actionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.actionButtonInset),
-            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * Constants.actionButtonBottomPaddingCoefficient)
+            mainActionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonHeight),
+            mainActionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.actionButtonInset),
+            mainActionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.actionButtonInset),
+            mainActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.actionButtonBottomPadding)
+        ])
+    }
+    
+    private func setupRestorePurchaseButton() {
+        view.addSubview(restorePurchaseButton)
+        
+        NSLayoutConstraint.activate([
+            restorePurchaseButton.heightAnchor.constraint(equalToConstant: Constants.restorePurchaseButtonHeight),
+            restorePurchaseButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.restorePurchaseButtonInset),
+            restorePurchaseButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -Constants.restorePurchaseBottomPadding)
+        ])
+    }
+    
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        
+        NSLayoutConstraint.activate([
+            closeButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonHeight),
+            closeButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonHeight),
+            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.closeButtonInset),
+            closeButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -Constants.closeButtonBottomPadding)
         ])
     }
     
@@ -172,15 +222,17 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     private func scrollToPage(to index: Int) {
-        let indexPath = IndexPath(item: index, section: 0)
+        let indexPath = IndexPath(item: index, section: .zero)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         pageControl.currentPage = index
     }
 
     private func refresh() {
-        actionButton.setTitle(presenter.isLastPage() ? "Trial&Pay" : "Continue", for: .normal)
+        mainActionButton.setTitle(presenter.isLastPage() ? "Try Free & Subscribe" : "Continue", for: .normal)
         pageControl.isHidden = presenter.isFirstPage() || presenter.isLastPage()
         policyView.isHidden = !(presenter.isFirstPage() || presenter.isLastPage())
+        restorePurchaseButton.isHidden = !presenter.isLastPage()
+        closeButton.isHidden = !presenter.isLastPage()
     }
     
     // MARK: - UICollectionViewDataSource
@@ -235,13 +287,21 @@ private extension OnboardingViewController {
         static let termsOfUseURL: String = "https://assistai.guru/documents/tos.html"
         static let privacyPolicyURL: String = "https://assistai.guru/documents/privacy.html"
         static let subscriptiontermsURL: String = "https://assistai.guru/documents/subscription.html"
-        static let actionButtonHeight: CGFloat = 56
-        static let actionButtonCornerRadius: CGFloat = 28
-        static let actionButtonInset: CGFloat = 31
-        static let collectionHeightCoefficient: CGFloat = 0.72
-        static let collectionBottomPaddingCoefficient: CGFloat = 0.189
-        static let pageControlBottomPaddingCoefficient: CGFloat = 0.055
-        static let actionButtonBottomPaddingCoefficient: CGFloat = 0.095
-        static let privacyViewBottomPadding: CGFloat = 34
+        static let actionButtonHeight: CGFloat = 56.0
+        static let actionButtonCornerRadius: CGFloat = 28.0
+        static let actionButtonInset: CGFloat = 31.0
+        static let collectionViewTopPadding: CGFloat = 100.0
+        static let collectionViewBottomPadding: CGFloat = 170.0
+        static let pageControlBottomPadding: CGFloat = 50.0
+        static let actionButtonBottomPadding: CGFloat = 86.0
+        static let privacyViewBottomPadding: CGFloat = 34.0
+        static let restorePurchaseButtonTitle: String = "Restore Purchase"
+        static let closeButtonHeight: CGFloat = 18.0
+        static let closeButtonBottomPadding: CGFloat = 25.0
+        static let restorePurchaseBottomPadding: CGFloat = 25.0
+        static let restorePurchaseButtonHeight: CGFloat = 18.0
+        static let restorePurchaseButtonInset: CGFloat = 17.0
+        static let closeButtonInset: CGFloat = 21.0
+        
     }
 }

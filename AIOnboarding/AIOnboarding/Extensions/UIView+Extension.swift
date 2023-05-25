@@ -8,19 +8,16 @@
 import UIKit
 
 extension UIView {
-    func animateSelection(animationDuration: Double = 0.1, completion: EmptyBlock? = nil) {
+    func animateSelection(animationDuration: Double = 0.2, completion: EmptyBlock? = nil) {
         
         self.isUserInteractionEnabled = false
-        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-        
+        self.backgroundColor = .gray
         UIView.animate(
             withDuration: animationDuration,
             delay: .zero,
-            usingSpringWithDamping: CGFloat(0.9),
-            initialSpringVelocity: CGFloat(1.0),
-            options: UIView.AnimationOptions.curveEaseInOut,
+            options: .curveLinear,
             animations: {
-                self.transform = CGAffineTransform.identity
+                self.backgroundColor = .white
             },
             completion: { Void in
                 completion?()

@@ -37,7 +37,12 @@ internal enum FontFamily {
     internal static let medium = FontConvertible(name: "SFProDisplay-Medium", family: "SF Pro Display", path: "SF-Pro-Display-Medium.OTF")
     internal static let all: [FontConvertible] = [bold, medium]
   }
-  internal static let allCustomFonts: [FontConvertible] = [SFPro.all, SFProDisplay.all].flatMap { $0 }
+  internal enum SFProText {
+    internal static let medium = FontConvertible(name: "SFProText-Medium", family: "SF Pro Text", path: "SFProText-Medium.ttf")
+    internal static let regular = FontConvertible(name: "SFProText-Regular", family: "SF Pro Text", path: "SFProText-Regular.ttf")
+    internal static let all: [FontConvertible] = [medium, regular]
+  }
+  internal static let allCustomFonts: [FontConvertible] = [SFPro.all, SFProDisplay.all, SFProText.all].flatMap { $0 }
   internal static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }

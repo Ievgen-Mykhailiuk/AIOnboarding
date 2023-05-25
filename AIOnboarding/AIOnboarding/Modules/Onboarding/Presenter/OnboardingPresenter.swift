@@ -15,6 +15,8 @@ protocol OnboardingPresenterProtocol {
     func getCurrentPageIndex() -> Int
     func isFirstPage() -> Bool
     func isLastPage() -> Bool
+    func onCloseTapped()
+    func onRestorePurchaseTapped()
 }
 
 final class OnboardingPresenter {
@@ -23,9 +25,8 @@ final class OnboardingPresenter {
     
     private weak var view: OnboardingViewProtocol!
     private let router: OnboardingRouterProtocol
-    
-    var pages: [Int] = [1, 2, 3, 4]
-    var currentPageIndex: Int = .zero 
+    private var pages: [Int] = [1, 2, 3, 4]
+    private var currentPageIndex: Int = .zero
     
     // MARK: - Lifecycle
     
@@ -34,6 +35,7 @@ final class OnboardingPresenter {
         self.view = view
         self.router = router
     }
+    
 }
 
 // MARK: - OnboardingPresenterProtocol
@@ -72,6 +74,14 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
     
     func isLastPage() -> Bool {
         return currentPageIndex + 1 == pages.last
+    }
+    
+    func onCloseTapped() {
+        router.close()
+    }
+
+    func onRestorePurchaseTapped() {
+         
     }
 
 }
