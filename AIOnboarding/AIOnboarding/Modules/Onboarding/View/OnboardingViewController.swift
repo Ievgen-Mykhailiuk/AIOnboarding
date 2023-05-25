@@ -104,7 +104,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         backgroundImageView.frame = view.bounds
         setupCollectionView()
         setupPageControl()
-        setupPageButton()
+        setupMainActionButton()
         setupPolicyView()
         setupRestorePurchaseButton()
         setupCloseButton()
@@ -135,7 +135,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         ])
     }
     
-    private func setupmainActionButton() {
+    private func setupMainActionButton() {
         view.addSubview(mainActionButton)
         
         NSLayoutConstraint.activate([
@@ -243,7 +243,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: OnboardingCell = .cell(in: self.collectionView, at: indexPath)
-        cell.configure()
+        cell.configure(with: presenter.getPageAt(indexPath.item))
         return cell
     }
     

@@ -10,25 +10,24 @@ import UIKit
 final class OnboardingCell: BaseCollectionViewCell {
    
     // MARK: - Properties
-    private lazy var cardView: UIView = {
+    private lazy var container: UIView = {
         let view = UIView(frame: .zero)
         return view
     }()
     
-    private lazy var backgroundImageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let view = UIImageView(frame: .zero)
         return view
     }()
-    
+
     // MARK: - Configuring
     
-    func configure() {
-        cardView.addSubview(backgroundImageView)
-        cardView.layer.cornerRadius = 20
-        cardView.backgroundColor = Colors.cardBackground.color
-        contentView.addSubview(cardView)
-        cardView.frame = contentView.bounds
+    func configure(with model: OnboardingPage) {
+        contentView.addSubview(container)
+        container.frame = contentView.bounds
+        imageView.image = model.image
+        container.addSubview(imageView)
+        imageView.frame = container.bounds
     }
-    
     
 }
