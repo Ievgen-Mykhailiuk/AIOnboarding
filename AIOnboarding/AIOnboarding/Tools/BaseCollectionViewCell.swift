@@ -7,6 +7,13 @@
 
 import UIKit
 
+
+class BaseCollectionViewCell: UICollectionViewCell,
+                              CollectionCellRegistable,
+                              CollectionCellDequeueable {}
+
+// MARK: - CellIdentifying
+
 protocol CellIdentifying: AnyObject {
     static var cellIdentifier: String { get }
 }
@@ -17,6 +24,7 @@ extension CellIdentifying {
     }
 }
 
+// MARK: - CollectionCellRegistable
 
 protocol CollectionCellRegistable: CellIdentifying {
     static func registerClass(in collection: UICollectionView)
@@ -34,6 +42,8 @@ extension CollectionCellRegistable {
     }
 }
 
+// MARK: - CollectionCellDequeueable
+
 protocol CollectionCellDequeueable: CellIdentifying {
     static func cell<T: BaseCollectionViewCell>(in collection: UICollectionView,
                                                 at indexPath: IndexPath) -> T
@@ -49,9 +59,3 @@ extension CollectionCellDequeueable {
         return cell
     }
 }
-
-class BaseCollectionViewCell: UICollectionViewCell,
-                              CollectionCellRegistable,
-                              CollectionCellDequeueable {
-}
-

@@ -13,7 +13,8 @@ final class LoadingView: UIView {
     
     private var currentViewIndex: Int = .zero
     private var timer: Timer?
-    var dotsCount: Int = 5 {
+
+    var dotsCount: Int = 4 {
         didSet {
             setup()
             updateDotsSizes()
@@ -49,7 +50,6 @@ final class LoadingView: UIView {
     }
     
     private func updateDotsSizes() {
-        let width = frame.size.width - (CGFloat(dotsCount - 1) * .spacing)
         subviews.enumerated()
             .forEach({ index, view in
                 view.layer.cornerRadius = .dotSize / 2
@@ -82,13 +82,11 @@ final class LoadingView: UIView {
         }
         
         let view = subviews[currentViewIndex]
-        let defualtColor = view.backgroundColor
         UIView.animate(withDuration: TimeInterval(.animationDuration / 2), delay: .zero) {
             view.transform = CGAffineTransform(scaleX: .increasedScale, y: .increasedScale)
         } completion: { _ in
             UIView.animate(withDuration: TimeInterval(.animationDuration / 2), animations: {
-                view.transform = CGAffineTransform(scaleX: .identityScale, y: .identityScale)
-                view.backgroundColor = defualtColor
+                view.transform = CGAffineTransform.identity
             })
         }
     }
@@ -116,9 +114,8 @@ final class LoadingView: UIView {
 private extension CGFloat {
     static let dotSize = 10.0
     static let spacing = 5.0
-    static let animationDuration  = 0.4
-    static let aheadTime = 0.2
-    static let identityScale = 1.0
+    static let animationDuration = 0.6
+    static let aheadTime = 0.3
     static let increasedScale = 2.0
 }
 

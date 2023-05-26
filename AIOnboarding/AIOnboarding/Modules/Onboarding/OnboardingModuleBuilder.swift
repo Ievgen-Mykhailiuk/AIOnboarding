@@ -12,6 +12,7 @@ protocol OnboardingModuleBuilderProtocol {
 }
 
 final class OnboardingModuleBuilder:  OnboardingModuleBuilderProtocol {
+    
     func createOnboardingModule() -> UIViewController {
         let view  = OnboardingViewController()
         let router = OnboardingRouter(viewController: view)
@@ -21,4 +22,5 @@ final class OnboardingModuleBuilder:  OnboardingModuleBuilderProtocol {
         let navigationController = UINavigationController(rootViewController: view)
         return navigationController
     }
+    
 }

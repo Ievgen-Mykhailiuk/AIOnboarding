@@ -5,10 +5,11 @@
 //  Created by Евгений  on 23/05/2023.
 //
 
-import Foundation
+import UIKit
 
 protocol OnboardingRouterProtocol {
     func showOboarding()
+    func open(_ url: URL)
     func close()
 }
 
@@ -20,6 +21,10 @@ final class OnboardingRouter: BaseRouter, OnboardingRouterProtocol {
              isModal: false,
              animated: true,
              completion: nil)
+    }
+    
+    func open(_ url: URL) {
+        UIApplication.shared.open(url)
     }
     
     func close() {}

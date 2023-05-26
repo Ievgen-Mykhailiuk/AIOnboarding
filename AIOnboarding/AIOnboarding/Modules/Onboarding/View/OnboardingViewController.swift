@@ -14,16 +14,18 @@ protocol OnboardingViewProtocol: AnyObject {
     func loading(isLoading: Bool)
 }
 
-final class OnboardingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+final class OnboardingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - Properties
     
     var presenter: OnboardingPresenterProtocol!
+    
     private lazy var loadingView: LoadingView = {
         let loadingView = LoadingView()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         return loadingView
     }()
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CardsCollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
@@ -33,47 +35,54 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    private lazy var pageControl: PageControl = {
+    
+    private lazy var pageControlView: PageControl = {
         let pageControl = PageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
+    
     private lazy var mainActionButton: UIButton = {
-        let actionButton = UIButton()
-        actionButton.backgroundColor = .white
-        actionButton.layer.cornerRadius = Constants.actionButtonCornerRadius
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        actionButton.setTitleColor(.black, for: .normal)
-        return actionButton
+        let mainActionButton = UIButton()
+        mainActionButton.backgroundColor = .white
+        mainActionButton.titleLabel?.font = .SFProMedium(of: .mainActionButtonFontSize)
+        mainActionButton.layer.cornerRadius = .mainActionButtonCornerRadius
+        mainActionButton.translatesAutoresizingMaskIntoConstraints = false
+        mainActionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        mainActionButton.setTitleColor(.black, for: .normal)
+        return mainActionButton
     }()
+    
     private lazy var backgroundImageView: UIImageView = {
         let imageview = UIImageView(image: Images.background.image)
         return imageview
     }()
-    private lazy var policyView: UIStackView = {
+    
+    private lazy var infoView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private lazy var restorePurchaseButton: UIButton = {
         let restorePurchaseButton = UIButton()
-        restorePurchaseButton.titleLabel?.font = FontFamily.SFProText.medium.font(size: 14)
+        restorePurchaseButton.titleLabel?.font = .SFProTextMedium(of: .restorePurchaseFontSize)
         restorePurchaseButton.setTitleColor(Colors.inactivePageIndicator.color, for: .normal)
+        restorePurchaseButton.setTitleColor(Colors.inactivePageIndicator.color.withAlphaComponent(0.5), for: .highlighted)
         restorePurchaseButton.backgroundColor = .clear
         restorePurchaseButton.translatesAutoresizingMaskIntoConstraints = false
         restorePurchaseButton.addTarget(self, action: #selector(restorePurchaseButtonTapped), for: .touchUpInside)
-        restorePurchaseButton.setTitle(Constants.restorePurchaseButtonTitle, for: .normal)
+        restorePurchaseButton.setTitle(Strings.restorePurchase, for: .normal)
         return restorePurchaseButton
     }()
+    
     private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.backgroundColor = .clear
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        closeButton.setTitleColor(.black, for: .normal)
         closeButton.setImage(Images.closeButton.image, for: .normal)
         return closeButton
     }()
@@ -90,15 +99,14 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     @objc private func actionButtonTapped(_ sender: UIButton) {
         sender.animateSelection()
         presenter.onActionButtonTapped()
-        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
     
     @objc private func restorePurchaseButtonTapped(_ sender: UIButton) {
-        
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
     
     @objc private func closeButtonTapped(_ sender: UIButton) {
-        
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
     }
     
     // MARK: - Private methods
@@ -110,33 +118,33 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         setupCollectionView()
         setupPageControl()
         setupMainActionButton()
-        setupPolicyView()
+        setupInfoView()
         setupRestorePurchaseButton()
         setupCloseButton()
         refresh()
     }
     
     private func setupCollectionView() {
-        OnboardingCell.registerClass(in: collectionView)
+        OnboardingCollectionViewCell.registerClass(in: collectionView)
         collectionView.dataSource = self
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.collectionViewTopPadding),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.collectionViewBottomPadding)
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: .collectionViewTopPadding),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -.collectionViewBottomPadding)
         ])
     }
     
     private func setupPageControl() {
-        pageControl.numberOfPages = presenter.getPagesCount()
-        pageControl.currentPage = presenter.getCurrentPageIndex()
-        view.addSubview(pageControl)
+        pageControlView.numberOfPages = presenter.getPagesCount()
+        pageControlView.currentPage = presenter.getCurrentPageIndex()
+        view.addSubview(pageControlView)
         
         NSLayoutConstraint.activate([
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.pageControlBottomPadding)
+            pageControlView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControlView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -.pageControlViewBottomPadding)
         ])
     }
     
@@ -145,16 +153,16 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         mainActionButton.addSubview(loadingView)
         
         NSLayoutConstraint.activate([
-            loadingView.widthAnchor.constraint(equalToConstant: 80),
+            loadingView.widthAnchor.constraint(equalToConstant: .loadingViewWidth),
             loadingView.centerYAnchor.constraint(equalTo: mainActionButton.centerYAnchor),
             loadingView.centerXAnchor.constraint(equalTo: mainActionButton.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            mainActionButton.heightAnchor.constraint(equalToConstant: Constants.actionButtonHeight),
-            mainActionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.actionButtonInset),
-            mainActionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.actionButtonInset),
-            mainActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.actionButtonBottomPadding)
+            mainActionButton.heightAnchor.constraint(equalToConstant: .mainActionButtonHeight),
+            mainActionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: .mainActionButtonInset),
+            mainActionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -.mainActionButtonInset),
+            mainActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -.mainActionButtonBottomPadding)
         ])
     }
     
@@ -162,9 +170,9 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         view.addSubview(restorePurchaseButton)
         
         NSLayoutConstraint.activate([
-            restorePurchaseButton.heightAnchor.constraint(equalToConstant: Constants.restorePurchaseButtonHeight),
-            restorePurchaseButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.restorePurchaseButtonInset),
-            restorePurchaseButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -Constants.restorePurchaseBottomPadding)
+            restorePurchaseButton.heightAnchor.constraint(equalToConstant: .restorePurchaseButtonHeight),
+            restorePurchaseButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: .restorePurchaseButtonInset),
+            restorePurchaseButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -.restorePurchaseButtonBottomPadding)
         ])
     }
     
@@ -172,32 +180,44 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         view.addSubview(closeButton)
         
         NSLayoutConstraint.activate([
-            closeButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonHeight),
-            closeButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonHeight),
-            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.closeButtonInset),
-            closeButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -Constants.closeButtonBottomPadding)
+            closeButton.heightAnchor.constraint(equalToConstant: .closeButtonHeight),
+            closeButton.widthAnchor.constraint(equalToConstant: .closeButtonHeight),
+            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -.closeButtonInset),
+            closeButton.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -.closeButtonBottomPadding)
         ])
     }
     
-    private func setupPolicyView() {
+    private func setupInfoView() {
+        let infoViewFont: UIFont = .SFProTextRegular(of: .infoViewFontSize)
+       
         // Create the label
-        let font = FontFamily.SFPro.opticalSize17Weight400.font(size: 12)
         let label = UILabel()
-        label.font = font
+        label.font = infoViewFont
         label.textColor = UIColor.gray
-        label.text = "By continuing you accept our:"
+        label.text = Strings.byContinuingYouAcceptOur
         
         // Create the attributed string for the links
-        
-        let termsOfUseLink = NSAttributedString(string: "Terms of Use", attributes: [.link: Constants.termsOfUseURL, .font: font])
-        
-        let privacyPolicyLink = NSAttributedString(string: "Privacy Policy", attributes: [.link: Constants.privacyPolicyURL, .font: font])
-        
-        let subscriptionTermsLink = NSAttributedString(string: "Subscription Terms", attributes: [.link: Constants.subscriptiontermsURL, .font: font])
-        
-        let commaSepatator = NSAttributedString(string: ", ", attributes: [.font: font, .foregroundColor: UIColor.gray])
-        
-        let andSepatator = NSAttributedString(string: ", and ", attributes: [.font: font, .foregroundColor: UIColor.gray])        
+        let termsOfUseLink = NSAttributedString(
+            string: Strings.termsOfUse,
+            attributes: [.link: Link.termsOfUseURL, .font: infoViewFont]
+        )
+        let privacyPolicyLink = NSAttributedString(
+            string: Strings.privacyPolicy,
+            attributes: [.link: Link.privacyPolicyURL, .font: infoViewFont]
+        )
+        let subscriptionTermsLink = NSAttributedString(
+            string: Strings.subscriptionTerms,
+            attributes: [.link: Link.subscriptiontermsURL, .font: infoViewFont]
+        )
+        let commaSepatator = NSAttributedString(
+            string: .commaSeparator,
+            attributes: [.font: infoViewFont, .foregroundColor: Colors.infoText.color]
+        )
+        let andSepatator = NSAttributedString(
+            string: .commaSeparator + Strings.and + .separator,
+            attributes: [.font: infoViewFont, .foregroundColor: Colors.infoText.color]
+        )
+      
         // Create the text view
         let textView = UITextView()
         textView.backgroundColor = .clear
@@ -207,41 +227,39 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = .zero
         
-        
         // Combine the attributed strings and set it to the text view
         let fullText = NSMutableAttributedString()
-        fullText.append(termsOfUseLink)
-        fullText.append(commaSepatator)
-        fullText.append(privacyPolicyLink)
-        fullText.append(andSepatator)
-        fullText.append(subscriptionTermsLink)
+        [termsOfUseLink, commaSepatator, privacyPolicyLink, andSepatator, subscriptionTermsLink].forEach {
+            fullText.append($0)
+        }
         textView.attributedText = fullText
         
         // Handle link tapping
         textView.delegate = self
         
+        // Final configuring Info view
         [label, textView].forEach {
-            policyView.addArrangedSubview($0)
+            infoView.addArrangedSubview($0)
         }
-        view.addSubview(policyView)
+        view.addSubview(infoView)
         
         NSLayoutConstraint.activate([
-            policyView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            policyView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            policyView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.privacyViewBottomPadding)
+            infoView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            infoView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            infoView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -.infoViewBottomPadding)
         ])
     }
     
     private func scrollToPage(to index: Int) {
         let indexPath = IndexPath(item: index, section: .zero)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        pageControl.currentPage = index
+        pageControlView.currentPage = index
     }
     
     private func refresh() {
-        mainActionButton.setTitle(presenter.isLastPage() ? "Try Free & Subscribe" : "Continue", for: .normal)
-        pageControl.isHidden = presenter.isFirstPage() || presenter.isLastPage()
-        policyView.isHidden = !(presenter.isFirstPage() || presenter.isLastPage())
+        mainActionButton.setTitle(presenter.isLastPage() ? Strings.tryFreeSubscribe : Strings.continue, for: .normal)
+        pageControlView.isHidden = presenter.isFirstPage() || presenter.isLastPage()
+        infoView.isHidden = !(presenter.isFirstPage() || presenter.isLastPage())
         restorePurchaseButton.isHidden = !presenter.isLastPage()
         closeButton.isHidden = !presenter.isLastPage()
     }
@@ -253,7 +271,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: OnboardingCell = .cell(in: self.collectionView, at: indexPath)
+        let cell: OnboardingCollectionViewCell = .cell(in: self.collectionView, at: indexPath)
         cell.configure(with: presenter.getPageAt(indexPath.item))
         return cell
     }
@@ -294,31 +312,36 @@ extension OnboardingViewController: OnboardingViewProtocol {
 
 extension OnboardingViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        UIApplication.shared.open(URL)
+        presenter.onLinkTapped(URL)
         return false
     }
 }
 
-private extension OnboardingViewController {
-    enum Constants {
-        static let termsOfUseURL: String = "https://assistai.guru/documents/tos.html"
-        static let privacyPolicyURL: String = "https://assistai.guru/documents/privacy.html"
-        static let subscriptiontermsURL: String = "https://assistai.guru/documents/subscription.html"
-        static let actionButtonHeight: CGFloat = 56.0
-        static let actionButtonCornerRadius: CGFloat = 28.0
-        static let actionButtonInset: CGFloat = 31.0
-        static let collectionViewTopPadding: CGFloat = 100.0
-        static let collectionViewBottomPadding: CGFloat = 170.0
-        static let pageControlBottomPadding: CGFloat = 50.0
-        static let actionButtonBottomPadding: CGFloat = 86.0
-        static let privacyViewBottomPadding: CGFloat = 34.0
-        static let restorePurchaseButtonTitle: String = "Restore Purchase"
-        static let closeButtonHeight: CGFloat = 18.0
-        static let closeButtonBottomPadding: CGFloat = 25.0
-        static let restorePurchaseBottomPadding: CGFloat = 25.0
-        static let restorePurchaseButtonHeight: CGFloat = 18.0
-        static let restorePurchaseButtonInset: CGFloat = 17.0
-        static let closeButtonInset: CGFloat = 21.0
-        
-    }
+private extension CGFloat {
+    
+    static let pageControlViewBottomPadding = 50.0
+    
+    static let infoViewBottomPadding = 34.0
+    static let infoViewFontSize = 12.0
+    
+    static let loadingViewWidth = 60.0
+    
+    static let mainActionButtonHeight = 56.0
+    static let mainActionButtonCornerRadius = 28.0
+    static let mainActionButtonInset = 31.0
+    static let mainActionButtonBottomPadding = 86.0
+    static let mainActionButtonFontSize = 17.0
+    
+    static let collectionViewTopPadding = 100.0
+    static let collectionViewBottomPadding = 170.0
+    
+    static let closeButtonHeight = 18.0
+    static let closeButtonBottomPadding = 25.0
+    static let closeButtonInset = 21.0
+    
+    static let restorePurchaseButtonBottomPadding = 25.0
+    static let restorePurchaseButtonHeight = 18.0
+    static let restorePurchaseButtonInset = 17.0
+    static let restorePurchaseFontSize = 14.0
+    
 }

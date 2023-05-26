@@ -27,6 +27,7 @@ internal enum Colors {
   internal static let chatBlue = ColorAsset(name: "chatBlue")
   internal static let chatPurple = ColorAsset(name: "chatPurple")
   internal static let inactivePageIndicator = ColorAsset(name: "inactivePageIndicator")
+  internal static let infoText = ColorAsset(name: "infoText")
   internal static let introductionBackground = ColorAsset(name: "introductionBackground")
   internal static let introductionMain = ColorAsset(name: "introductionMain")
   internal static let suggestionBlue = ColorAsset(name: "suggestionBlue")

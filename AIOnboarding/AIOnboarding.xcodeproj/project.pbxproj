@@ -18,9 +18,8 @@
 		FC304E652A1D537000E2C135 /* LocalizableStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = FC304E642A1D537000E2C135 /* LocalizableStrings.strings */; };
 		FC304E692A1D544A00E2C135 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E682A1D544A00E2C135 /* Strings.swift */; };
 		FC304E6B2A1D5B4F00E2C135 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */; };
-		FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */; };
 		FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */; };
-		FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */; };
+		FCAB15972A1E193500DB8DFE /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15962A1E193500DB8DFE /* OnboardingCollectionViewCell.swift */; };
 		FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */; };
 		FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */; };
 		FCCF7BD92A1E9A650091D5B2 /* HapticFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */; };
@@ -35,6 +34,10 @@
 		FCE4A95E2A1F9D1600EBF4FC /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCE4A95C2A1F9D1600EBF4FC /* SFProText-Regular.ttf */; };
 		FCE4A9602A1FAB1300EBF4FC /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A95F2A1FAB1300EBF4FC /* OnboardingPage.swift */; };
 		FCE4A9622A1FFD5C00EBF4FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */; };
+		FCE4A9662A20AFE400EBF4FC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A9652A20AFE400EBF4FC /* String+Extension.swift */; };
+		FCE4A9682A20B2E100EBF4FC /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A9672A20B2E100EBF4FC /* Link.swift */; };
+		FCE4A96A2A20B3AC00EBF4FC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A9692A20B3AC00EBF4FC /* UIFont+Extension.swift */; };
+		FCE4A96C2A20D16600EBF4FC /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE4A96B2A20D16600EBF4FC /* UINavigationController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,9 +52,8 @@
 		FC304E642A1D537000E2C135 /* LocalizableStrings.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LocalizableStrings.strings; sourceTree = "<group>"; };
 		FC304E682A1D544A00E2C135 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
-		FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCell.swift; sourceTree = "<group>"; };
+		FCAB15962A1E193500DB8DFE /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackGenerator.swift; sourceTree = "<group>"; };
@@ -68,6 +70,10 @@
 		FCE4A95C2A1F9D1600EBF4FC /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		FCE4A95F2A1FAB1300EBF4FC /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		FCE4A9652A20AFE400EBF4FC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		FCE4A9672A20B2E100EBF4FC /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		FCE4A9692A20B3AC00EBF4FC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		FCE4A96B2A20D16600EBF4FC /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +111,7 @@
 			children = (
 				FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */,
 				FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */,
-				FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */,
+				FCE4A9672A20B2E100EBF4FC /* Link.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -113,9 +119,11 @@
 		FC304E472A1D2E1200E2C135 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FC304E6C2A1D5E4100E2C135 /* UINavigationController+Extension.swift */,
 				FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */,
 				FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */,
+				FCE4A9652A20AFE400EBF4FC /* String+Extension.swift */,
+				FCE4A9692A20B3AC00EBF4FC /* UIFont+Extension.swift */,
+				FCE4A96B2A20D16600EBF4FC /* UINavigationController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -144,10 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				FCDDAF252A1CD13B008C70EF /* OnboardingViewController.swift */,
-				FCAB15962A1E193500DB8DFE /* OnboardingCell.swift */,
+				FCAB15962A1E193500DB8DFE /* OnboardingCollectionViewCell.swift */,
 				FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */,
-				FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */,
-				FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				FC304E522A1D2EEF00E2C135 /* App */,
+				FCE4A9632A20A99800EBF4FC /* Common */,
 				FC304E472A1D2E1200E2C135 /* Extensions */,
 				FC304E462A1D2E0C00E2C135 /* Tools */,
 				FC304E452A1D2D8D00E2C135 /* Resources */,
@@ -227,6 +234,24 @@
 				FCDDAF2F2A1CD13D008C70EF /* Info.plist */,
 			);
 			path = AIOnboarding;
+			sourceTree = "<group>";
+		};
+		FCE4A9632A20A99800EBF4FC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */,
+				FCE4A9642A20A9A400EBF4FC /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FCE4A9642A20A9A400EBF4FC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */,
+				FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,14 +333,17 @@
 				FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */,
 				FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */,
 				FC304E5F2A1D367600E2C135 /* Colors.swift in Sources */,
-				FC304E6D2A1D5E4100E2C135 /* UINavigationController+Extension.swift in Sources */,
 				FCE4A9622A1FFD5C00EBF4FC /* LoadingView.swift in Sources */,
+				FCE4A96A2A20B3AC00EBF4FC /* UIFont+Extension.swift in Sources */,
 				FC304E692A1D544A00E2C135 /* Strings.swift in Sources */,
-				FCAB15972A1E193500DB8DFE /* OnboardingCell.swift in Sources */,
+				FCAB15972A1E193500DB8DFE /* OnboardingCollectionViewCell.swift in Sources */,
 				FC304E4A2A1D2E4400E2C135 /* OnboardingModuleBuilder.swift in Sources */,
 				FCDDAF262A1CD13B008C70EF /* OnboardingViewController.swift in Sources */,
 				FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */,
+				FCE4A96C2A20D16600EBF4FC /* UINavigationController+Extension.swift in Sources */,
 				FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */,
+				FCE4A9682A20B2E100EBF4FC /* Link.swift in Sources */,
+				FCE4A9662A20AFE400EBF4FC /* String+Extension.swift in Sources */,
 				FCCF7BD92A1E9A650091D5B2 /* HapticFeedbackGenerator.swift in Sources */,
 				FCCF7BDD2A1EB2B00091D5B2 /* UIView+Extension.swift in Sources */,
 				FC304E4E2A1D2E7400E2C135 /* OnboardingPresenter.swift in Sources */,

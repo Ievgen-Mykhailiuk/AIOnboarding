@@ -15,8 +15,8 @@ extension UIViewController {
     }
     
     func presentAlert(title: String?,
-                   message: String?,
-                   actions: [UIAlertAction]? = nil) {
+                      message: String?,
+                      actions: [UIAlertAction]? = nil) {
         
         let alert = UIAlertController(title: title,
                                       message: message,
@@ -30,10 +30,9 @@ extension UIViewController {
                                           style: .default,
                                           handler: nil))
         }
+        
         DispatchQueue.main.async {
-            self.present(alert,
-                         animated: true,
-                         completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

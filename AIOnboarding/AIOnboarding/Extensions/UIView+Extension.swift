@@ -7,17 +7,22 @@
 
 import UIKit
 
-extension UIView {
-    func animateSelection(animationDuration: Double = 0.2, completion: EmptyBlock? = nil) {
+extension UIButton {
+    
+    func animateSelection(with backgroundColor: UIColor = .gray,
+                          animationDuration: Double = 0.2,
+                          completion: EmptyBlock? = nil) {
         
-        self.isUserInteractionEnabled = false
-        self.backgroundColor = .gray
+        guard let identityBackgroundColor = self.backgroundColor else { return }
+        
+        isUserInteractionEnabled = false
+        self.backgroundColor = backgroundColor
         UIView.animate(
             withDuration: animationDuration,
             delay: .zero,
             options: .curveLinear,
             animations: {
-                self.backgroundColor = .white
+                self.backgroundColor = identityBackgroundColor
             },
             completion: { Void in
                 completion?()

@@ -7,9 +7,10 @@
 
 import UIKit
 
-final class OnboardingCell: BaseCollectionViewCell {
+final class OnboardingCollectionViewCell: BaseCollectionViewCell {
    
     // MARK: - Properties
+    
     private lazy var container: UIView = {
         let view = UIView(frame: .zero)
         return view

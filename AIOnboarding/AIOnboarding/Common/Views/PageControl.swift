@@ -82,15 +82,20 @@ class PageControl: UIView {
     // MARK: - Private methods
     
     private func commonInit() {
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
     }
     
     private func updateIndicators() {
+       
+        // Clear indicators
+        
         indicators.forEach {
             $0.removeFromSuperview()
         }
         indicators.removeAll()
         indicatorWidthConstraints.removeAll()
+        
+        // Create a new indicator view
         
         for index in 0 ..< numberOfPages {
             
@@ -101,6 +106,8 @@ class PageControl: UIView {
             
             addSubview(indicatorView)
             
+            // Create constraints for indicator
+            
             let widthConstraint: NSLayoutConstraint
             if index == currentPage {
                 widthConstraint = indicatorView.widthAnchor.constraint(equalToConstant: activeIndicatorWidth)
@@ -108,6 +115,7 @@ class PageControl: UIView {
                 widthConstraint = indicatorView.widthAnchor.constraint(equalToConstant: indicatorSize.width)
             }
             widthConstraint.isActive = true
+            
             indicatorWidthConstraints.append(widthConstraint)
             
             NSLayoutConstraint.activate([
@@ -126,8 +134,12 @@ class PageControl: UIView {
                 ])
             }
             
+            // Add the indicator view to the array
+            
             indicators.append(indicatorView)
         }
+            
+        // Position the last indicator at the trailing edge of the view
         
         if let lastIndicator = indicators.last {
             NSLayoutConstraint.activate([
@@ -135,6 +147,8 @@ class PageControl: UIView {
             ])
         }
         
+        // Invalidate the intrinsic content size to trigger a layout update
+                
         invalidateIntrinsicContentSize()
     }
     

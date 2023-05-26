@@ -10,6 +10,7 @@ import Foundation
 protocol OnboardingPresenterProtocol {
     func viewDidLoad()
     func onActionButtonTapped()
+    func onLinkTapped(_ url: URL)
     func getPagesCount() -> Int
     func getPageAt(_ index: Int) -> OnboardingPage
     func getCurrentPageIndex() -> Int
@@ -37,28 +38,40 @@ final class OnboardingPresenter {
         self.pages = dataSource
     }
     
+    private func nextPage(_ index: Int) {
+        currentPageIndex += 1
+        DispatchQueue.main.async {
+            self.view.nextPage(at: index)
+        }
+    }
+    
+    private func purchase() {
+        view.loading(isLoading: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.view.showAlert(title: "Purchase", message: "Trial 7 days", actions: nil)
+            self.view.loading(isLoading: false)
+        })
+    }
+    
 }
 
 // MARK: - OnboardingPresenterProtocol
 
 extension OnboardingPresenter: OnboardingPresenterProtocol {
-
+    
     func viewDidLoad() {
         view.setupUI()
     }
     
     func onActionButtonTapped() {
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
         let nextPageIndex = currentPageIndex + 1
-        if nextPageIndex < pages.count {
-            currentPageIndex += 1
-            view.nextPage(at: nextPageIndex)
-        } else {
-            view.loading(isLoading: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                self.view.showAlert(title: "Purchase", message: "Trial 7 days", actions: nil)
-                self.view.loading(isLoading: false)
-            })
-        }
+        nextPageIndex < pages.count ? nextPage(nextPageIndex) : purchase()
+    }
+    
+    func onLinkTapped(_ url: URL) {
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
+        router.open(url)
     }
     
     func getPagesCount() -> Int {
@@ -66,7 +79,7 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
     }
     
     func getPageAt(_ index: Int) -> OnboardingPage {
-         return pages[index]
+        return pages[index]
     }
     
     func getCurrentPageIndex() -> Int {
@@ -84,9 +97,9 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
     func onCloseTapped() {
         router.close()
     }
-
+    
     func onRestorePurchaseTapped() {
-         
+        
     }
-
+    
 }
