@@ -13,22 +13,34 @@ internal enum Strings {
   /// and
   internal static let and = Strings.tr("LocalizableStrings", "and", fallback: "and")
   /// By continuing you accept our:
-  internal static let byContinuingYouAcceptOur = Strings.tr("LocalizableStrings", "By continuing you accept our:", fallback: "By continuing you accept our:")
+  internal static let byContinuingYouAcceptOur = Strings.tr("LocalizableStrings", "by continuing you accept our:", fallback: "By continuing you accept our:")
   /// LocalizableStrings.strings
   ///   AIOnboarding
   /// 
   ///   Created by Евгений  on 23/05/2023.
   internal static let `continue` = Strings.tr("LocalizableStrings", "continue", fallback: "Continue")
+  /// Error
+  internal static let error = Strings.tr("LocalizableStrings", "error", fallback: "Error")
   /// Privacy Policy
-  internal static let privacyPolicy = Strings.tr("LocalizableStrings", "Privacy Policy", fallback: "Privacy Policy")
+  internal static let privacyPolicy = Strings.tr("LocalizableStrings", "privacy policy", fallback: "Privacy Policy")
+  /// product not found
+  internal static let productNotFound = Strings.tr("LocalizableStrings", "product not found", fallback: "product not found")
+  /// purchase in progress
+  internal static let purchaseInProgress = Strings.tr("LocalizableStrings", "purchase in progress", fallback: "purchase in progress")
+  /// You have successfully purchased a subscription
+  internal static let purchased = Strings.tr("LocalizableStrings", "purchased", fallback: "You have successfully purchased a subscription")
   /// Restore Purchase
   internal static let restorePurchase = Strings.tr("LocalizableStrings", "restore_purchase", fallback: "Restore Purchase")
+  /// You have successfully restored your subscription
+  internal static let restored = Strings.tr("LocalizableStrings", "restored", fallback: "You have successfully restored your subscription")
   /// Subscription Terms
-  internal static let subscriptionTerms = Strings.tr("LocalizableStrings", "Subscription Terms", fallback: "Subscription Terms")
+  internal static let subscriptionTerms = Strings.tr("LocalizableStrings", "subscription terms", fallback: "Subscription Terms")
   /// Terms of Use
-  internal static let termsOfUse = Strings.tr("LocalizableStrings", "Terms of Use", fallback: "Terms of Use")
+  internal static let termsOfUse = Strings.tr("LocalizableStrings", "terms of Use", fallback: "Terms of Use")
   /// Try Free & Subscribe
   internal static let tryFreeSubscribe = Strings.tr("LocalizableStrings", "try_free_&_subscribe", fallback: "Try Free & Subscribe")
+  /// unknown error
+  internal static let unknownError = Strings.tr("LocalizableStrings", "unknown error", fallback: "unknown error")
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

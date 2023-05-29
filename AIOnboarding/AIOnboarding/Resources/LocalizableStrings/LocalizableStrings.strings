@@ -1,0 +1,22 @@
+/* 
+  LocalizableStrings.strings
+  AIOnboarding
+
+  Created by Евгений  on 23/05/2023.
+  
+*/
+
+"continue" = "Continue";
+"try_free_&_subscribe" = "Try Free & Subscribe";
+"restore_purchase" = "Restore Purchase";
+"by continuing you accept our:" = "By continuing you accept our:";
+"terms of Use" = "Terms of Use";
+"privacy policy" = "Privacy Policy";
+"subscription terms" = "Subscription Terms";
+"and" = "and";
+"error" = "Error";
+"purchased" = "You have successfully purchased a subscription";
+"restored" = "You have successfully restored your subscription";
+"purchase in progress" = "purchase in progress";
+"product not found" = "product not found";
+"unknown error" = "unknown error";

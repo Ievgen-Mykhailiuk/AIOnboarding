@@ -12,7 +12,7 @@ protocol OnboardingPresenterProtocol {
     func onActionButtonTapped()
     func onLinkTapped(_ url: URL)
     func getPagesCount() -> Int
-    func getPageAt(_ index: Int) -> OnboardingPage
+    func getPageFor(_ index: Int) -> OnboardingPage
     func getCurrentPageIndex() -> Int
     func isFirstPage() -> Bool
     func isLastPage() -> Bool
@@ -24,33 +24,54 @@ final class OnboardingPresenter {
     
     // MARK: - Properties
     
-    private weak var view: OnboardingViewProtocol!
+    private weak var view: OnboardingViewProtocol?
     private let router: OnboardingRouterProtocol
     private var pages: [OnboardingPage] = []
     private var currentPageIndex: Int = .zero
+    private let purchasesManager: PurchasesManagerProtocol
     
     // MARK: - Lifecycle
     
     init(view: OnboardingViewProtocol,
-         router: OnboardingRouterProtocol) {
+         router: OnboardingRouterProtocol,
+         purchasesManager: PurchasesManagerProtocol) {
         self.view = view
         self.router = router
-        self.pages = dataSource
+        self.purchasesManager = purchasesManager
     }
     
     private func nextPage(_ index: Int) {
         currentPageIndex += 1
         DispatchQueue.main.async {
-            self.view.nextPage(at: index)
+            self.view?.nextPage(at: index)
         }
     }
     
     private func purchase() {
-        view.loading(isLoading: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-            self.view.showAlert(title: "Purchase", message: "Trial 7 days", actions: nil)
-            self.view.loading(isLoading: false)
-        })
+        view?.loading(isLoading: true)
+        purchasesManager.purchase { result in
+            switch result {
+            case .success(_):
+                self.view?.showAlert(title: .empty, message: Strings.purchased, actions: nil)
+            case .failure(let error):
+                self.handleError(error)
+            }
+            self.view?.loading(isLoading: false)
+        }
+    }
+    
+    private func getPages(_ completion: EmptyBlock) {
+        /// Just to simulate an api request
+        pages = dataSource
+        completion()
+    }
+    
+    private func handleError(_ error: Error) {
+        if let customError = error as? PurchaseError {
+            self.view?.showAlert(title: Strings.error, message: customError.description , actions: nil)
+        } else {
+            self.view?.showAlert(title: Strings.error, message: error.localizedDescription , actions: nil)
+        }
     }
     
 }
@@ -60,7 +81,9 @@ final class OnboardingPresenter {
 extension OnboardingPresenter: OnboardingPresenterProtocol {
     
     func viewDidLoad() {
-        view.setupUI()
+        getPages {
+            view?.setupUI()
+        }
     }
     
     func onActionButtonTapped() {
@@ -78,7 +101,7 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
         return pages.count
     }
     
-    func getPageAt(_ index: Int) -> OnboardingPage {
+    func getPageFor(_ index: Int) -> OnboardingPage {
         return pages[index]
     }
     
@@ -95,11 +118,22 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
     }
     
     func onCloseTapped() {
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
         router.close()
     }
     
     func onRestorePurchaseTapped() {
-        
+        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
+        view?.loading(isLoading: true)
+        purchasesManager.restorePurchase { result in
+            switch result {
+            case .success(_):
+                self.view?.showAlert(title: .empty, message: Strings.restored, actions: nil)
+            case .failure(let error):
+                self.handleError(error)
+            }
+            self.view?.loading(isLoading: false)
+        }
     }
     
 }

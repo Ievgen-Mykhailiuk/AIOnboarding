@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PageControl: UIView {
+class PageControlView: UIView {
     
     // MARK: - Properties
 

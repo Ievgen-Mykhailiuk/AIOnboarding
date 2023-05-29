@@ -19,11 +19,12 @@
 		FC304E692A1D544A00E2C135 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E682A1D544A00E2C135 /* Strings.swift */; };
 		FC304E6B2A1D5B4F00E2C135 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */; };
 		FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */; };
+		FC84137B2A20D620004E0B10 /* PurchasesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC84137A2A20D620004E0B10 /* PurchasesManager.swift */; };
 		FCAB15972A1E193500DB8DFE /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15962A1E193500DB8DFE /* OnboardingCollectionViewCell.swift */; };
 		FCAB159F2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */; };
 		FCAB15A12A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */; };
 		FCCF7BD92A1E9A650091D5B2 /* HapticFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */; };
-		FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */; };
+		FCCF7BDB2A1EAE710091D5B2 /* PageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BDA2A1EAE710091D5B2 /* PageControlView.swift */; };
 		FCCF7BDD2A1EB2B00091D5B2 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */; };
 		FCDDAF222A1CD13B008C70EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */; };
 		FCDDAF242A1CD13B008C70EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDDAF232A1CD13B008C70EF /* SceneDelegate.swift */; };
@@ -53,11 +54,13 @@
 		FC304E682A1D544A00E2C135 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
 		FC304E6E2A1D5E7B00E2C135 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		FC84137A2A20D620004E0B10 /* PurchasesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesManager.swift; sourceTree = "<group>"; };
+		FC84137C2A20FD64004E0B10 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		FCAB15962A1E193500DB8DFE /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCAB15A02A1E305A00DB8DFE /* CardsCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		FCCF7BD82A1E9A650091D5B2 /* HapticFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackGenerator.swift; sourceTree = "<group>"; };
-		FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
+		FCCF7BDA2A1EAE710091D5B2 /* PageControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlView.swift; sourceTree = "<group>"; };
 		FCCF7BDC2A1EB2B00091D5B2 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		FCDDAF1E2A1CD13B008C70EF /* AIOnboarding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIOnboarding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCDDAF212A1CD13B008C70EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC13F81C2A24A03600E69093 /* LocalizableStrings */ = {
+			isa = PBXGroup;
+			children = (
+				FC304E642A1D537000E2C135 /* LocalizableStrings.strings */,
+			);
+			path = LocalizableStrings;
+			sourceTree = "<group>";
+		};
 		FC304E442A1D2D8100E2C135 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,10 +109,10 @@
 		FC304E452A1D2D8D00E2C135 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FC13F81C2A24A03600E69093 /* LocalizableStrings */,
 				FC304E572A1D359700E2C135 /* Autogenerated */,
 				FC304E542A1D31CB00E2C135 /* Fonts */,
 				FC304E532A1D31C200E2C135 /* Assets */,
-				FC304E642A1D537000E2C135 /* LocalizableStrings.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -112,6 +123,7 @@
 				FC304E6A2A1D5B4F00E2C135 /* BaseRouter.swift */,
 				FCAB159E2A1E2FC700DB8DFE /* BaseCollectionViewCell.swift */,
 				FCE4A9672A20B2E100EBF4FC /* Link.swift */,
+				FC84137A2A20D620004E0B10 /* PurchasesManager.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -232,6 +244,7 @@
 				FC304E452A1D2D8D00E2C135 /* Resources */,
 				FC304E442A1D2D8100E2C135 /* Modules */,
 				FCDDAF2F2A1CD13D008C70EF /* Info.plist */,
+				FC84137C2A20FD64004E0B10 /* Configuration.storekit */,
 			);
 			path = AIOnboarding;
 			sourceTree = "<group>";
@@ -248,7 +261,7 @@
 		FCE4A9642A20A9A400EBF4FC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FCCF7BDA2A1EAE710091D5B2 /* PageControl.swift */,
+				FCCF7BDA2A1EAE710091D5B2 /* PageControlView.swift */,
 				FCE4A9612A1FFD5C00EBF4FC /* LoadingView.swift */,
 			);
 			path = Views;
@@ -331,10 +344,11 @@
 			files = (
 				FC304E5D2A1D367600E2C135 /* Fonts.swift in Sources */,
 				FC304E6F2A1D5E7B00E2C135 /* UIViewController+Extension.swift in Sources */,
-				FCCF7BDB2A1EAE710091D5B2 /* PageControl.swift in Sources */,
+				FCCF7BDB2A1EAE710091D5B2 /* PageControlView.swift in Sources */,
 				FC304E5F2A1D367600E2C135 /* Colors.swift in Sources */,
 				FCE4A9622A1FFD5C00EBF4FC /* LoadingView.swift in Sources */,
 				FCE4A96A2A20B3AC00EBF4FC /* UIFont+Extension.swift in Sources */,
+				FC84137B2A20D620004E0B10 /* PurchasesManager.swift in Sources */,
 				FC304E692A1D544A00E2C135 /* Strings.swift in Sources */,
 				FCAB15972A1E193500DB8DFE /* OnboardingCollectionViewCell.swift in Sources */,
 				FC304E4A2A1D2E4400E2C135 /* OnboardingModuleBuilder.swift in Sources */,

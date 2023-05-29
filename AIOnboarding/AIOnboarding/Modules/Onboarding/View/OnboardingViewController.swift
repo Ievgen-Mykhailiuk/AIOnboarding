@@ -36,8 +36,8 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         return collectionView
     }()
     
-    private lazy var pageControlView: PageControl = {
-        let pageControl = PageControl()
+    private lazy var pageControlView: PageControlView = {
+        let pageControl = PageControlView()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -102,11 +102,11 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     }
     
     @objc private func restorePurchaseButtonTapped(_ sender: UIButton) {
-        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
+        presenter.onRestorePurchaseTapped()
     }
     
     @objc private func closeButtonTapped(_ sender: UIButton) {
-        HapticFeedbackGenerator.shared.vibrateSelectionChanged()
+        presenter.onCloseTapped()
     }
     
     // MARK: - Private methods
@@ -196,7 +196,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
         label.textColor = UIColor.gray
         label.text = Strings.byContinuingYouAcceptOur
         
-        // Create the attributed string for the links
+        // Create the attributed strings for links
         let termsOfUseLink = NSAttributedString(
             string: Strings.termsOfUse,
             attributes: [.link: Link.termsOfUseURL, .font: infoViewFont]
@@ -272,7 +272,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: OnboardingCollectionViewCell = .cell(in: self.collectionView, at: indexPath)
-        cell.configure(with: presenter.getPageAt(indexPath.item))
+        cell.configure(with: presenter.getPageFor(indexPath.item))
         return cell
     }
     
@@ -291,6 +291,7 @@ extension OnboardingViewController: OnboardingViewProtocol {
     func loading(isLoading: Bool) {
         mainActionButton.setTitleColor( isLoading ? .clear : .black, for: .normal)
         isLoading ? loadingView.start() : loadingView.stop()
+        mainActionButton.isUserInteractionEnabled = !isLoading
     }
     
     func setupUI() {
