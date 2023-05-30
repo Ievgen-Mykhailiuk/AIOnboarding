@@ -77,7 +77,7 @@ final class PurchasesManager: NSObject {
                 self.productPurchaseCallback = nil
             }
             ///
-            //            completion(.failure(PurchasesError.productNotFound))
+//                        completion(.failure(PurchaseError.productNotFound))
             return
         }
         
@@ -139,14 +139,6 @@ extension PurchasesManager: SKPaymentTransactionObserver {
         productPurchaseCallback = nil
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        /// Just to simulate a successful result
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.productPurchaseCallback?(.success(true))
-            self.productPurchaseCallback = nil
-        }
-        ///
-    }
 }
 
 // MARK: - PurchasesManagerProtocol

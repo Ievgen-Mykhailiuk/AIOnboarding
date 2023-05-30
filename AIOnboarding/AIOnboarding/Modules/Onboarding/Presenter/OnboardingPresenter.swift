@@ -51,7 +51,7 @@ final class OnboardingPresenter {
     }
     
     private func purchase() {
-        view?.loading(isLoading: true)
+        loading(true)
         purchasesManager.purchase { [weak self] result in
             switch result {
             case .success(_):
@@ -70,12 +70,12 @@ final class OnboardingPresenter {
             case .failure(let error):
                 self?.handleError(error)
             }
-            self?.view?.loading(isLoading: false)
+            self?.loading(false)
         }
     }
     
     private func restorePurchase() {
-        view?.loading(isLoading: true)
+        loading(true)
         purchasesManager.restorePurchase { [weak self] result in
             switch result {
             case .success(_):
@@ -83,7 +83,7 @@ final class OnboardingPresenter {
             case .failure(let error):
                 self?.handleError(error)
             }
-            self?.view?.loading(isLoading: false)
+            self?.loading(false)
         }
     }
     
@@ -103,7 +103,13 @@ final class OnboardingPresenter {
         }
     }
     
-}
+    private func loading(_ isLoading: Bool) {
+        DispatchQueue.main.async {
+            self.view?.loading(isLoading: isLoading)
+        }
+    }
+    
+ }
 
 // MARK: - OnboardingPresenterProtocol
 
