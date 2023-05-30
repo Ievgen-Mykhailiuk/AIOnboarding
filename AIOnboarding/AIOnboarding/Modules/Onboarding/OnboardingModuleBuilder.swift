@@ -17,9 +17,11 @@ final class OnboardingModuleBuilder:  OnboardingModuleBuilderProtocol {
         let view  = OnboardingViewController()
         let router = OnboardingRouter(viewController: view)
         let purchasesManager = PurchasesManager()
+        let apiClient = DefaultPurchasesAPIClient()
         let presenter = OnboardingPresenter(view: view,
                                             router: router,
-                                            purchasesManager: purchasesManager)
+                                            purchasesManager: purchasesManager,
+                                            apiClient: apiClient)
         view.presenter = presenter
         let navigationController = UINavigationController(rootViewController: view)
         return navigationController

@@ -17,6 +17,13 @@
 "error" = "Error";
 "purchased" = "You have successfully purchased a subscription";
 "restored" = "You have successfully restored your subscription";
+
 "purchase in progress" = "purchase in progress";
 "product not found" = "product not found";
+"invalid receipt" = "Problems with receipt were occured";
 "unknown error" = "unknown error";
+
+"failed response" = "Failed Response";
+"failed decoding" = "Failed Decoding";
+"invalid url" = "Invalid URL";
+"invalid data" = "Invalid Data";

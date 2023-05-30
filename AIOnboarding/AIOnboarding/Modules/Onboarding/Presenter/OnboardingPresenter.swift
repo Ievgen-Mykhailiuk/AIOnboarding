@@ -26,18 +26,21 @@ final class OnboardingPresenter {
     
     private weak var view: OnboardingViewProtocol?
     private let router: OnboardingRouterProtocol
+    private let purchasesManager: PurchasesManagerProtocol
+    private let apiClient: PurchasesAPIClient
     private var pages: [OnboardingPage] = []
     private var currentPageIndex: Int = .zero
-    private let purchasesManager: PurchasesManagerProtocol
-    
+   
     // MARK: - Lifecycle
     
     init(view: OnboardingViewProtocol,
          router: OnboardingRouterProtocol,
-         purchasesManager: PurchasesManagerProtocol) {
+         purchasesManager: PurchasesManagerProtocol,
+         apiClient: PurchasesAPIClient) {
         self.view = view
         self.router = router
         self.purchasesManager = purchasesManager
+        self.apiClient = apiClient
     }
     
     private func nextPage(_ index: Int) {
@@ -49,14 +52,38 @@ final class OnboardingPresenter {
     
     private func purchase() {
         view?.loading(isLoading: true)
-        purchasesManager.purchase { result in
+        purchasesManager.purchase { [weak self] result in
             switch result {
             case .success(_):
-                self.view?.showAlert(title: .empty, message: Strings.purchased, actions: nil)
+                self?.apiClient.requestReceiptValidation(endpoint: .receiptValidation) { [weak self] result in
+                    switch result {
+                    case .success(_):
+                        /// Implement succesful receipt validation flow
+                        ()
+                    case .failure(_):
+                        ///Just to simulate  succesful receipt validation
+                        self?.view?.showAlert(title: .empty, message: Strings.purchased, actions: nil)
+                        ///
+//                        self?.handleError(error)
+                    }
+                }
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
-            self.view?.loading(isLoading: false)
+            self?.view?.loading(isLoading: false)
+        }
+    }
+    
+    private func restorePurchase() {
+        view?.loading(isLoading: true)
+        purchasesManager.restorePurchase { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.view?.showAlert(title: .empty, message: Strings.restored, actions: nil)
+            case .failure(let error):
+                self?.handleError(error)
+            }
+            self?.view?.loading(isLoading: false)
         }
     }
     
@@ -67,8 +94,10 @@ final class OnboardingPresenter {
     }
     
     private func handleError(_ error: Error) {
-        if let customError = error as? PurchaseError {
-            self.view?.showAlert(title: Strings.error, message: customError.description , actions: nil)
+        if let purchaseError = error as? PurchaseError {
+            self.view?.showAlert(title: Strings.error, message: purchaseError.description , actions: nil)
+        } else if let networkError = error as? NetworkError {
+            self.view?.showAlert(title: Strings.error, message: networkError.description , actions: nil)
         } else {
             self.view?.showAlert(title: Strings.error, message: error.localizedDescription , actions: nil)
         }
@@ -124,16 +153,7 @@ extension OnboardingPresenter: OnboardingPresenterProtocol {
     
     func onRestorePurchaseTapped() {
         HapticFeedbackGenerator.shared.vibrateSelectionChanged()
-        view?.loading(isLoading: true)
-        purchasesManager.restorePurchase { result in
-            switch result {
-            case .success(_):
-                self.view?.showAlert(title: .empty, message: Strings.restored, actions: nil)
-            case .failure(let error):
-                self.handleError(error)
-            }
-            self.view?.loading(isLoading: false)
-        }
+        restorePurchase()
     }
     
 }

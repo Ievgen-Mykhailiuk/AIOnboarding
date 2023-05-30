@@ -12,6 +12,8 @@ import Foundation
 internal enum Strings {
   /// and
   internal static let and = Strings.tr("LocalizableStrings", "and", fallback: "and")
+  /// Problems with receipt were occured
+  internal static let badReceipt = Strings.tr("LocalizableStrings", "bad receipt", fallback: "Problems with receipt were occured")
   /// By continuing you accept our:
   internal static let byContinuingYouAcceptOur = Strings.tr("LocalizableStrings", "by continuing you accept our:", fallback: "By continuing you accept our:")
   /// LocalizableStrings.strings
@@ -21,6 +23,14 @@ internal enum Strings {
   internal static let `continue` = Strings.tr("LocalizableStrings", "continue", fallback: "Continue")
   /// Error
   internal static let error = Strings.tr("LocalizableStrings", "error", fallback: "Error")
+  /// Failed Decoding
+  internal static let failedDecoding = Strings.tr("LocalizableStrings", "failed decoding", fallback: "Failed Decoding")
+  /// Failed Response
+  internal static let failedResponse = Strings.tr("LocalizableStrings", "failed response", fallback: "Failed Response")
+  /// Invalid Data
+  internal static let invalidData = Strings.tr("LocalizableStrings", "invalid data", fallback: "Invalid Data")
+  /// Invalid URL
+  internal static let invalidUrl = Strings.tr("LocalizableStrings", "invalid url", fallback: "Invalid URL")
   /// Privacy Policy
   internal static let privacyPolicy = Strings.tr("LocalizableStrings", "privacy policy", fallback: "Privacy Policy")
   /// product not found
